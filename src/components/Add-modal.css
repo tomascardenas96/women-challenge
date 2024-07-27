@@ -1,0 +1,74 @@
+.modal-container {
+  width: 100%;
+  height: 100svh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.348);
+  z-index: 1000;
+  display: grid;
+  place-content: center;
+}
+
+.modal {
+  width: 30rem;
+  height: 30rem;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.617);
+  border-radius: 0.2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 2rem 1rem;
+}
+
+.modal > form {
+  width: 100%;
+  display: grid;
+  height: 100%;
+  grid-template-rows: repeat(5, 1fr) 2fr;
+  /* padding: 1rem; */
+  gap: 1rem;
+
+  & label {
+    /* width: 100%; */
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    place-content: center;
+    font-family: var(--font-family);
+    text-align: center;
+    font-size: 0.9rem;
+  }
+}
+
+.modal > form input {
+  height: 2rem;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  font-family: var(--font-family);
+  padding-left: 0.5rem;
+  outline: none;
+}
+
+.modal > form textarea {
+  height: 3.5rem;
+  outline: none;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  border-radius: 0.3rem;
+  resize: none;
+  font-family: var(--font-family);
+}
+
+.submit-btn {
+  display: grid;
+  justify-content: end;
+  align-items: center;
+
+  & input[type="submit"] {
+    width: 30rem;
+    height: 3rem;
+    font-family: var(--font-family);
+  }
+}

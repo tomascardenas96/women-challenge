@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 
-function useCreateNewWoman() {
+function useCreateNewWoman(setWomen, women) {
   const [userInput, setUserInput] = useState({
-    id: 1000,
+    id: 0,
     name: "",
     lastName: "",
     nationality: "",
     bio: "",
     photo: "",
   });
+
+  useEffect(() => {
+    setUserInput((prev) => ({ id: women.length + 1, ...prev }));
+  }, [women]);
 
   async function handleCreateNewWoman(e) {
     e.preventDefault();
@@ -23,9 +27,11 @@ function useCreateNewWoman() {
       );
 
       const data = await response.json();
-    } catch (error) {
-      
-    }
+      if (data.error) {
+        throw new Error();
+      }
+      setWomen((prevWomen) => [...prevWomen, data]);
+    } catch (error) {}
   }
 
   function handleChangeInput(e) {

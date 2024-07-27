@@ -2,9 +2,9 @@ import useCreateNewWoman from "../hooks/useCreateNewWoman";
 import "./Add-modal.css";
 import React from "react";
 
-function AddModal({ modal }) {
+function AddModal({ modal, setWomen, women }) {
   const { handleChangeInput, handleCreateNewWoman, userInput } =
-    useCreateNewWoman();
+    useCreateNewWoman(setWomen, women);
 
   return (
     <div className="modal-container" onClick={modal}>

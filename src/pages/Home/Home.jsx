@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 import WomanCard from "../../components/WomanCard";
 import useGetWomen from "../../hooks/useGetWomen.jsx";
-import { IoMdAdd } from "react-icons/io";
-import "./Home.css";
 import AddModal from "../../components/Add-modal";
+import "./Home.css";
 
 function Home() {
-  const { women, handleChange, filterInput } = useGetWomen();
+  const { women, handleChange, filterInput, setWomen } = useGetWomen();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,12 +31,22 @@ function Home() {
           />
         </form>
         <IoMdAdd className="add-new" onClick={openCloseModal} />
-        {isModalOpen && <AddModal modal={openCloseModal} />}
+        {isModalOpen && (
+          <AddModal modal={openCloseModal} setWomen={setWomen} women={women} />
+        )}
       </div>
       <div className="women-list">
         {women.map((woman) => {
           if (
-            woman.name.toLowerCase().includes(filterInput.name.toLowerCase())
+            woman.name.toLowerCase().includes(filterInput.name.toLowerCase()) ||
+            woman.lastName
+              .toLowerCase()
+              .includes(filterInput.name.toLowerCase()) ||
+            (
+              woman.name.toLowerCase() +
+              " " +
+              woman.lastName.toLowerCase()
+            ).includes(filterInput.name.toLowerCase())
           ) {
             return (
               <WomanCard

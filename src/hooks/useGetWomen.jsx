@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 function useGetWomen() {
   const [women, setWomen] = useState([]);
@@ -6,23 +6,22 @@ function useGetWomen() {
     name: "",
   });
 
-  useEffect(() => {
-    async function getWomen() {
-      const response = await fetch(
-        "https://66a427c944aa637045837424.mockapi.io/woman",
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+  const getWomen = useCallback(async () => {
+    const response = await fetch(
+      "https://66a427c944aa637045837424.mockapi.io/woman",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
-      const data = await response.json();
-
-      setWomen(data);
-    }
-
-    getWomen();
+    const data = await response.json();
+    setWomen(data);
   }, []);
+
+  useEffect(() => {
+    getWomen();
+  }, [getWomen]);
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -33,6 +32,7 @@ function useGetWomen() {
     women,
     handleChange,
     filterInput,
+    setWomen,
   };
 }
 

@@ -3,15 +3,23 @@ import { IoMdAdd } from "react-icons/io";
 import WomanCard from "../../components/WomanCard";
 import useGetWomen from "../../hooks/useGetWomen.jsx";
 import AddModal from "../../components/Add-modal";
+import UpdateModal from "../../components/Update-modal";
 import "./Home.css";
 
 function Home() {
   const { women, handleChange, filterInput, setWomen } = useGetWomen();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedWoman, setSelectedWoman] = useState(null);
 
-  function openCloseModal() {
-    setIsModalOpen(!isModalOpen);
+  function openCloseAddModal() {
+    setIsAddModalOpen(!isAddModalOpen);
+  }
+
+  function openCloseUpdateModal(woman) {
+    setSelectedWoman(woman);
+    setIsUpdateModalOpen(!isUpdateModalOpen);
   }
 
   return (
@@ -30,10 +38,7 @@ function Home() {
             className="filter-input"
           />
         </form>
-        <IoMdAdd className="add-new" onClick={openCloseModal} />
-        {isModalOpen && (
-          <AddModal modal={openCloseModal} setWomen={setWomen} women={women} />
-        )}
+        <IoMdAdd className="add-new" onClick={openCloseAddModal} />
       </div>
       <div className="women-list">
         {women.map((woman) => {
@@ -50,17 +55,34 @@ function Home() {
           ) {
             return (
               <WomanCard
+                key={woman.id}
+                id={woman.id}
                 name={woman.name}
                 lastname={woman.lastName}
                 nationality={woman.nationality}
                 bio={woman.bio}
                 image={woman.photo}
+                openCloseUpdateModal={() => openCloseUpdateModal(woman)}
               />
             );
           }
           return null;
         })}
       </div>
+
+      {/* Modal para actualizar una tarjeta */}
+      {isUpdateModalOpen && selectedWoman && (
+        <UpdateModal
+          modal={openCloseUpdateModal}
+          woman={selectedWoman}
+          setWomen={setWomen}
+        />
+      )}
+
+      {/* Modal para crear una nueva tarjeta */}
+      {isAddModalOpen && (
+        <AddModal modal={openCloseAddModal} setWomen={setWomen} women={women} />
+      )}
     </main>
   );
 }

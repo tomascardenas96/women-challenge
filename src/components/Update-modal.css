@@ -1,4 +1,4 @@
-.modal-container {
+.update-modal {
   width: 100%;
   height: 100svh;
   position: fixed;
@@ -7,11 +7,12 @@
   background-color: rgba(0, 0, 0, 0.348);
   z-index: 1000;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border-radius: 0;
 }
 
-.modal {
+.update-modal_opened {
   width: 30rem;
   height: 30rem;
   /* From https://css.glass */
@@ -24,16 +25,14 @@
   padding: 2rem 1rem;
 }
 
-.modal > form {
+.update-modal_opened > form {
   width: 100%;
   display: grid;
   height: 100%;
   grid-template-rows: repeat(5, 1fr) 2fr;
-  /* padding: 1rem; */
   gap: 1rem;
 
   & label {
-    /* width: 100%; */
     display: grid;
     grid-template-columns: 10rem 1fr;
     place-content: center;
@@ -43,7 +42,7 @@
   }
 }
 
-.modal > form input {
+.update-modal_opened > form input {
   height: 2rem;
   border-radius: 0.3rem;
   border: 1px solid black;
@@ -52,7 +51,7 @@
   outline: none;
 }
 
-.modal > form textarea {
+.update-modal_opened > form textarea {
   height: 3.5rem;
   outline: none;
   padding-left: 0.5rem;

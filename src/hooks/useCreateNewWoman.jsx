@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useCreateNewWoman(setWomen, women) {
+function useCreateNewWoman(setWomen, women, modal) {
   const [userInput, setUserInput] = useState({
     id: 0,
     name: "",
@@ -31,6 +31,7 @@ function useCreateNewWoman(setWomen, women) {
         throw new Error();
       }
       setWomen((prevWomen) => [...prevWomen, data]);
+      modal();
     } catch (error) {}
   }
 

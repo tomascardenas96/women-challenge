@@ -1,21 +1,31 @@
-import useCreateNewWoman from "../hooks/useCreateNewWoman";
-import "./Add-modal.css";
-import React from "react";
+import { useEffect } from "react";
+import "./Update-modal.css";
+import useUpdateWoman from "../hooks/useUpdateWoman";
 
-function AddModal({ modal, setWomen, women }) {
-  const { handleChangeInput, handleCreateNewWoman, userInput } =
-    useCreateNewWoman(setWomen, women, modal);
+function UpdateModal({ modal, woman, setWomen }) {
+  const { updateWoman, handleChangeUpdateWoman, userInput, setUserInput } =
+    useUpdateWoman(setWomen, modal);
+
+  useEffect(() => {
+    setUserInput({
+      name: woman.name,
+      lastName: woman.lastName,
+      nationality: woman.nationality,
+      bio: woman.bio,
+      photo: woman.photo,
+    });
+  }, []);
 
   return (
-    <div className="modal-container" onClick={modal}>
-      <div className="modal" onClick={(event) => event.stopPropagation()}>
-        <form onSubmit={handleCreateNewWoman}>
+    <section className="update-modal" onClick={modal}>
+      <div className="update-modal_opened" onClick={(e) => e.stopPropagation()}>
+        <form onSubmit={(e) => updateWoman(e, woman.id)}>
           <label htmlFor="name">
             Nombre
             <input
               type="text"
               name="name"
-              onChange={handleChangeInput}
+              onChange={handleChangeUpdateWoman}
               value={userInput.name}
             />
           </label>
@@ -24,7 +34,7 @@ function AddModal({ modal, setWomen, women }) {
             <input
               type="text"
               name="lastName"
-              onChange={handleChangeInput}
+              onChange={handleChangeUpdateWoman}
               value={userInput.lastName}
             />
           </label>
@@ -33,7 +43,7 @@ function AddModal({ modal, setWomen, women }) {
             <input
               type="text"
               name="nationality"
-              onChange={handleChangeInput}
+              onChange={handleChangeUpdateWoman}
               value={userInput.nationality}
             />
           </label>
@@ -42,7 +52,7 @@ function AddModal({ modal, setWomen, women }) {
             <textarea
               type="text"
               name="bio"
-              onChange={handleChangeInput}
+              onChange={handleChangeUpdateWoman}
               value={userInput.bio}
             />
           </label>
@@ -51,7 +61,7 @@ function AddModal({ modal, setWomen, women }) {
             <input
               type="text"
               name="photo"
-              onChange={handleChangeInput}
+              onChange={handleChangeUpdateWoman}
               value={userInput.photo}
             />
           </label>
@@ -60,8 +70,8 @@ function AddModal({ modal, setWomen, women }) {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 
-export default AddModal;
+export default UpdateModal;

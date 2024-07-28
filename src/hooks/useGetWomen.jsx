@@ -5,18 +5,28 @@ function useGetWomen() {
   const [filterInput, setFilterInput] = useState({
     name: "",
   });
+  const [womenLoading, setWomenLoading] = useState(false);
+  const [womenError, setWomenError] = useState(false);
 
   const getWomen = useCallback(async () => {
-    const response = await fetch(
-      "https://66a427c944aa637045837424.mockapi.io/woman",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    setWomenLoading(true);
+    try {
+      const response = await fetch(
+        "https://66a427c944aa637045837424.mockapi.io/woman",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-    const data = await response.json();
-    setWomen(data);
+      const data = await response.json();
+      setWomen(data);
+    } catch (error) {
+      console.error(error);
+      setWomenError(true);
+    } finally {
+      setWomenLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -33,6 +43,8 @@ function useGetWomen() {
     handleChange,
     filterInput,
     setWomen,
+    womenLoading,
+    womenError,
   };
 }
 

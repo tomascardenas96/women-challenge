@@ -8,9 +8,12 @@ function useUpdateWoman(setWomen, modal) {
     bio: "",
     photo: "",
   });
+  const [updateWomanLoading, setUpdateWomanLoading] = useState(false);
+  const [updateWomanError, setUpdateWomanError] = useState(false);
 
   async function updateWoman(e, id) {
     e.preventDefault();
+    setUpdateWomanLoading(true);
     try {
       const response = await fetch(
         `https://66a427c944aa637045837424.mockapi.io/woman/${id}`,
@@ -33,7 +36,12 @@ function useUpdateWoman(setWomen, modal) {
 
       //Cerramos el modal
       modal();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      setUpdateWomanError(true);
+    } finally {
+      setUpdateWomanLoading(false);
+    }
   }
 
   function handleChangeUpdateWoman(e) {
@@ -41,7 +49,14 @@ function useUpdateWoman(setWomen, modal) {
     setUserInput((prev) => ({ ...prev, [name]: value }));
   }
 
-  return { updateWoman, handleChangeUpdateWoman, userInput, setUserInput };
+  return {
+    updateWoman,
+    handleChangeUpdateWoman,
+    userInput,
+    setUserInput,
+    updateWomanLoading,
+    updateWomanError,
+  };
 }
 
 export default useUpdateWoman;

@@ -9,6 +9,8 @@ function useCreateNewWoman(setWomen, women, modal) {
     bio: "",
     photo: "",
   });
+  const [newWomanLoading, setNewWomanLoading] = useState(false);
+  const [newWomanError, setNewWomanError] = useState(false);
 
   useEffect(() => {
     setUserInput((prev) => ({ id: women.length + 1, ...prev }));
@@ -16,6 +18,7 @@ function useCreateNewWoman(setWomen, women, modal) {
 
   async function handleCreateNewWoman(e) {
     e.preventDefault();
+    setNewWomanLoading(true);
     try {
       const response = await fetch(
         "https://66a427c944aa637045837424.mockapi.io/woman",
@@ -26,13 +29,19 @@ function useCreateNewWoman(setWomen, women, modal) {
         }
       );
 
-      const data = await response.json();
-      if (data.error) {
-        throw new Error();
+      if (!response.ok) {
+        throw new Error("Error trying to create a new woman card");
       }
+
+      const data = await response.json();
       setWomen((prevWomen) => [...prevWomen, data]);
       modal();
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      setNewWomanError(true);
+    } finally {
+      setNewWomanLoading(false);
+    }
   }
 
   function handleChangeInput(e) {
@@ -40,7 +49,13 @@ function useCreateNewWoman(setWomen, women, modal) {
     setUserInput({ ...userInput, [name]: value });
   }
 
-  return { handleChangeInput, handleCreateNewWoman, userInput };
+  return {
+    handleChangeInput,
+    handleCreateNewWoman,
+    userInput,
+    newWomanLoading,
+    newWomanError,
+  };
 }
 
 export default useCreateNewWoman;

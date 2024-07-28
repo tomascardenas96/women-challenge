@@ -3,8 +3,13 @@ import "./Add-modal.css";
 import React from "react";
 
 function AddModal({ modal, setWomen, women }) {
-  const { handleChangeInput, handleCreateNewWoman, userInput } =
-    useCreateNewWoman(setWomen, women, modal);
+  const {
+    handleChangeInput,
+    handleCreateNewWoman,
+    userInput,
+    newWomanLoading,
+    newWomanError,
+  } = useCreateNewWoman(setWomen, women, modal);
 
   return (
     <div className="modal-container" onClick={modal}>
@@ -17,6 +22,7 @@ function AddModal({ modal, setWomen, women }) {
               name="name"
               onChange={handleChangeInput}
               value={userInput.name}
+              required
             />
           </label>
           <label htmlFor="lastName">
@@ -26,6 +32,7 @@ function AddModal({ modal, setWomen, women }) {
               name="lastName"
               onChange={handleChangeInput}
               value={userInput.lastName}
+              required
             />
           </label>
           <label htmlFor="nationality">
@@ -35,6 +42,7 @@ function AddModal({ modal, setWomen, women }) {
               name="nationality"
               onChange={handleChangeInput}
               value={userInput.nationality}
+              required
             />
           </label>
           <label htmlFor="bio">
@@ -44,6 +52,7 @@ function AddModal({ modal, setWomen, women }) {
               name="bio"
               onChange={handleChangeInput}
               value={userInput.bio}
+              required
             />
           </label>
           <label htmlFor="photo">
@@ -53,6 +62,7 @@ function AddModal({ modal, setWomen, women }) {
               name="photo"
               onChange={handleChangeInput}
               value={userInput.photo}
+              required
             />
           </label>
           <div className="submit-btn">

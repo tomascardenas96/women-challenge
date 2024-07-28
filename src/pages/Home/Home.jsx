@@ -4,23 +4,26 @@ import WomanCard from "../../components/WomanCard";
 import useGetWomen from "../../hooks/useGetWomen.jsx";
 import AddModal from "../../components/Add-modal";
 import UpdateModal from "../../components/Update-modal";
+import useOpenModal from "../../hooks/useOpenModal";
 import "./Home.css";
 
 function Home() {
-  const { women, handleChange, filterInput, setWomen } = useGetWomen();
+  const {
+    women,
+    handleChange,
+    filterInput,
+    setWomen,
+    womenLoading,
+    womenError,
+  } = useGetWomen();
 
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [selectedWoman, setSelectedWoman] = useState(null);
-
-  function openCloseAddModal() {
-    setIsAddModalOpen(!isAddModalOpen);
-  }
-
-  function openCloseUpdateModal(woman) {
-    setSelectedWoman(woman);
-    setIsUpdateModalOpen(!isUpdateModalOpen);
-  }
+  const {
+    openCloseAddModal,
+    openCloseUpdateModal,
+    isAddModalOpen,
+    isUpdateModalOpen,
+    selectedWoman,
+  } = useOpenModal();
 
   return (
     <main>
@@ -42,7 +45,7 @@ function Home() {
       </div>
       <div className="women-list">
         {women.map((woman) => {
-          if (
+          const filtered =
             woman.name.toLowerCase().includes(filterInput.name.toLowerCase()) ||
             woman.lastName
               .toLowerCase()
@@ -51,8 +54,9 @@ function Home() {
               woman.name.toLowerCase() +
               " " +
               woman.lastName.toLowerCase()
-            ).includes(filterInput.name.toLowerCase())
-          ) {
+            ).includes(filterInput.name.toLowerCase());
+
+          if (filtered) {
             return (
               <WomanCard
                 key={woman.id}
@@ -63,6 +67,7 @@ function Home() {
                 bio={woman.bio}
                 image={woman.photo}
                 openCloseUpdateModal={() => openCloseUpdateModal(woman)}
+                setWomen={setWomen}
               />
             );
           }

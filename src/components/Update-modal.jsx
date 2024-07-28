@@ -3,8 +3,14 @@ import "./Update-modal.css";
 import useUpdateWoman from "../hooks/useUpdateWoman";
 
 function UpdateModal({ modal, woman, setWomen }) {
-  const { updateWoman, handleChangeUpdateWoman, userInput, setUserInput } =
-    useUpdateWoman(setWomen, modal);
+  const {
+    updateWoman,
+    handleChangeUpdateWoman,
+    userInput,
+    setUserInput,
+    updateWomanLoading,
+    updateWomanError,
+  } = useUpdateWoman(setWomen, modal);
 
   useEffect(() => {
     setUserInput({
@@ -27,6 +33,7 @@ function UpdateModal({ modal, woman, setWomen }) {
               name="name"
               onChange={handleChangeUpdateWoman}
               value={userInput.name}
+              required
             />
           </label>
           <label htmlFor="lastName">
@@ -36,6 +43,7 @@ function UpdateModal({ modal, woman, setWomen }) {
               name="lastName"
               onChange={handleChangeUpdateWoman}
               value={userInput.lastName}
+              required
             />
           </label>
           <label htmlFor="nationality">
@@ -45,6 +53,7 @@ function UpdateModal({ modal, woman, setWomen }) {
               name="nationality"
               onChange={handleChangeUpdateWoman}
               value={userInput.nationality}
+              required
             />
           </label>
           <label htmlFor="bio">
@@ -54,6 +63,7 @@ function UpdateModal({ modal, woman, setWomen }) {
               name="bio"
               onChange={handleChangeUpdateWoman}
               value={userInput.bio}
+              required
             />
           </label>
           <label htmlFor="photo">
@@ -63,6 +73,7 @@ function UpdateModal({ modal, woman, setWomen }) {
               name="photo"
               onChange={handleChangeUpdateWoman}
               value={userInput.photo}
+              required
             />
           </label>
           <div className="submit-btn">
